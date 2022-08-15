@@ -4,6 +4,8 @@ import * as url from 'url';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import PDLJS from 'peopledatalabs';
+import 'dotenv/config'
+
 
 const total = JSON.parse(
   fs.readFileSync(path.join(__dirname, "./companies.json"), 'utf-8')
@@ -33,7 +35,7 @@ filteredResult.forEach(el => companyNames.push(el.name))
 console.log(companyNames)
 
 
-const PDLJSClient = new PDLJS({apiKey: "dc036469e35bc58b61914eed7fa58e056f9a7ca8fc7d438655f33c55255c7b21"})
+const PDLJSClient = new PDLJS({apiKey: `${process.env.PDLAPIKey}`})
 
 // const finalList = []
 // for (let i = 0; i < companyNames.length; i++) {
