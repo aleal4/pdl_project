@@ -12,12 +12,9 @@ const total = JSON.parse(
   fs.readFileSync(path.join(__dirname, "./companies.json"), 'utf-8')
 );
 let result = total.companies;
-// console.log(Array.isArray(result))
-// console.log(result)
+
 const filteredResult = result.filter(ele => {
-  // software /
   const arrOfTags = ['software', 'artificial', 'cloud', 'infrastructure', 'internet', 'application'];
-  
   if (!ele.tags) return false;
   for (let i = 0; i < ele.tags.length; ++i) {
     const currentElement = ele.tags[i];
@@ -33,27 +30,10 @@ console.log(filteredResult.length);
 
 const companyNames = []
 filteredResult.forEach(el => companyNames.push(el.name))
-console.log(companyNames)
+// console.log(companyNames)
 
 
 const PDLJSClient = new PDLJS({apiKey: `${process.env.PDLAPIKey}`})
-
-// const finalList = []
-// for (let i = 0; i < companyNames.length; i++) {
-//   const queryString = {"name":`${companyNames[i]}`}
-  
-//   // Pass the parameters object to the Company Enrichment API
-//   PDLJSClient.company.enrichment(queryString).then((response) => {
-//     // Print the API response
-    
-//     finalList.push(response)
-//     console.log(response)
-//   }).catch((error) => {
-//     console.log(error);
-//   });
-// }
-// console.log(finalList)
-
 
 let finalList = []
 const test = async () => {
@@ -78,15 +58,15 @@ const test = async () => {
 
 
 
-const seniority_levels = [
- "cxo",
- "director",
- "manager",
- "partner",
- "vp",
- "owner"]
+// const seniority_levels = [
+//  "cxo",
+//  "director",
+//  "manager",
+//  "partner",
+//  "vp",
+//  "owner"]
  
- const seniority_criteria = {terms: {experience_title_levels: seniority_levels}}
+//  const seniority_criteria = {terms: {experience_title_levels: seniority_levels}}
  
  const esQuery2 = {
   query: {
@@ -95,7 +75,8 @@ const seniority_levels = [
         {term: {job_company_id: "buzzfeed"}}, 
         {term: {location_country: "united states"}},
         {term: {job_title: "software engineer"}}, 
-        // {term: {job_title_level: "senior"}}, 
+        // {exists: {field: "work_email"}},
+        {exists: {field: "job_start_date"}}, 
         {exists: {field: "linkedin_url"}}
       ], 
       must_not: [
@@ -121,23 +102,12 @@ PDLJSClient.person.search.elastic(params).then((data) => {
     for (let response in data.data) {
       
         record = data.data[response]
-        // console.log(record)
         list.push(record)
         list.sort((a, b) => {
-          return new Date (a.job_last_updated) - new Date (b.job_last_updated)
+          return new Date (b.job_start_date) - new Date (a.job_start_date)
         })
-        // console.log(list.record["job_start_date"])
-        // Print selected fields
-        // console.log(
-        //   record["job_title"],
-        //   record["linkedin_url"],
-        //   record["full_name"],
-        //   record["job_company_name"],
-        //   record["job_last_updated"]
-        //   )
         }
         
-    // console.log(list[2].job_start_date)
     for (let person of list){
       console.log(
         person["job_title"],
@@ -147,14 +117,16 @@ PDLJSClient.person.search.elastic(params).then((data) => {
       )
     }
     let csvHeaderFields = [
-      {id: "work_email", title: "work_email"},
-      {id: "full_name", title: "full_name"}, 
-      {id: "linkedin_url", title: "linkedin_url"},
-      {id: "job_title", title: "job_title"},
-      {id: "job_company_name", title: "job_company_name"}
+      {id: "work_email", title: "Work Email"},
+      {id: "full_name", title: "Full Name"}, 
+      {id: "linkedin_url", title: "LinkedIn"},
+      {id: "job_title", title: "Title"},
+      {id: "job_company_name", title: "Comapny"},
+      {id: "job_start_date", title: "Job Start Date"}
     ]
     let csvFilename = "BuzzFeed Top 10 Prospects"
     saveProfilesToCSV(list, csvFilename, csvHeaderFields)
+    console.log(list)
     console.log(`successfully grabbed ${data.data.length} records from pdl`);
     console.log(`${data["total"]} total pdl records exist matching this query`)
 }).catch((error) => {

@@ -1,18 +1,13 @@
-work_email,full_name,linkedin_url,job_title,job_company_name
-,greg thompson,linkedin.com/in/gregthompsonjr,software engineer,buzzfeed
-dominic.hanzely@buzzfeed.com,dominic hanzely,linkedin.com/in/dominic-hanzely-9593306,software engineer,buzzfeed
-elizabeth.wehner@buzzfeed.com,elizabeth wehner,linkedin.com/in/elizabeth-wehner-b562988,software engineer,buzzfeed
-,zach goodman,linkedin.com/in/zach-goodman-a42a101a5,software engineer,buzzfeed
-,ur mom,linkedin.com/in/ur-mom-152a121a5,software engineer,buzzfeed
-,christina georgiou,linkedin.com/in/christina-georgiou-37150417a,software engineer,buzzfeed
-,sara gulotta,linkedin.com/in/saragorecki,software engineer,buzzfeed
-,laryssa husiak,linkedin.com/in/laryssahusiak,software engineer,buzzfeed
-,brittany tan,linkedin.com/in/btan7,software engineer,buzzfeed
-sam.thurman@buzzfeed.com,sam thurman,linkedin.com/in/sam-thurman-b3b1977,software engineer,buzzfeed
-,jack l,linkedin.com/in/jack-l-5b1782220,software engineer,buzzfeed
-chino.kim@buzzfeed.com,chino kim,linkedin.com/in/chinokim,software engineer,buzzfeed
-andrea.ruggiero@buzzfeed.com,andrea ruggiero,linkedin.com/in/andrealeeruggiero,software engineer,buzzfeed
-jonathan.ginter@buzzfeed.com,jonathan ginter,linkedin.com/in/jonathan-ginter-bb1b007a,software engineer,buzzfeed
-,vanessa jimenez,linkedin.com/in/vanessajimenez27,software engineer,buzzfeed
-gerard.orozco@buzzfeed.com,gerard orozco,linkedin.com/in/gerard-orozco-374a9338,software engineer,buzzfeed
-,carla brady,linkedin.com/in/carla-brady,software engineer,buzzfeed
+Work Email,Full Name,LinkedIn,Title,Comapny,Job Start Date
+,vanessa jimenez,linkedin.com/in/vanessajimenez27,software engineer,buzzfeed,2021-08
+,brittany tan,linkedin.com/in/btan7,software engineer,buzzfeed,2021-06
+andrea.ruggiero@buzzfeed.com,andrea ruggiero,linkedin.com/in/andrealeeruggiero,software engineer,buzzfeed,2021-01
+chino.kim@buzzfeed.com,chino kim,linkedin.com/in/chinokim,software engineer,buzzfeed,2020-10
+jonathan.ginter@buzzfeed.com,jonathan ginter,linkedin.com/in/jonathan-ginter-bb1b007a,software engineer,buzzfeed,2019-06
+,laryssa husiak,linkedin.com/in/laryssahusiak,software engineer,buzzfeed,2018-01
+,sara gulotta,linkedin.com/in/saragorecki,software engineer,buzzfeed,2017-08
+elizabeth.wehner@buzzfeed.com,elizabeth wehner,linkedin.com/in/elizabeth-wehner-b562988,software engineer,buzzfeed,2017-02
+,greg thompson,linkedin.com/in/gregthompsonjr,software engineer,buzzfeed,2015-08-01
+dominic.hanzely@buzzfeed.com,dominic hanzely,linkedin.com/in/dominic-hanzely-9593306,software engineer,buzzfeed,2015-02-10
+sam.thurman@buzzfeed.com,sam thurman,linkedin.com/in/sam-thurman-b3b1977,software engineer,buzzfeed,2014-09
+gerard.orozco@buzzfeed.com,gerard orozco,linkedin.com/in/gerard-orozco-374a9338,software engineer,buzzfeed,2012-11
