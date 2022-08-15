@@ -79,9 +79,9 @@ const esQuery2 = {
     bool: {
       must:[
         {term: {job_company_id: "buzzfeed"}}, 
-        {term: {location: "united states"}},
+        // {term: {location: "united states"}},
         {term: {job_title_role: "engineering"}}, 
-        {exists: {field: "linkedin_url"}}
+        // {exists: {field: "linkedin_url"}}
       ]
     }
   }
@@ -105,9 +105,9 @@ PDLJSClient.person.search.elastic(params).then((data) => {
       
         // Print selected fields
         console.log(
+            record["job_title"],
             record["linkedin_url"],
             record["full_name"],
-            record["job_title"],
             record["job_company_name"],
             )
     }
