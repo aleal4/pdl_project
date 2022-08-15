@@ -72,77 +72,48 @@ const test = async () => {
       console.log(err);
   }
 }
-test();
-// console.log(finalList)
+// test();
 
-
-
-/*
-const finalList = []
-const test = async () => {
-  try {
-    for (let i = 0; i < companyNames.length; i++) {
-      const queryString = {"name":`${companyNames[i]}`}
-      const res = await PDLJSClient.company.enrichment(queryString)
-      finalList.push(res);
-   }
-  } catch (err) {
-      console.log(err);
+const esQuery2 = {
+  query: {
+    bool: {
+      must:[
+        {term: {job_company_id: "buzzfeed"}}, 
+        {term: {location: "united states"}},
+        {term: {job_title_role: "engineering"}}, 
+        {exists: {field: "linkedin_url"}}
+      ]
+    }
   }
 }
-console.log(finalList)
 
 
-
-const finalList = []
-for (let i = 0; i < companyNames.length; i++) {
-  const queryString = {"name":`${companyNames[i]}`}
-
-  
-  
-  // Pass the parameters object to the Company Enrichment API
-  PDLJSClient.company.enrichment(queryString).then((response) => {
-    // Print the API response
-    
-    finalList.push(response)
-    console.log(respose)
-  }).catch((error) => {
-    console.log(error);
-  });
+var params = {
+  searchQuery: esQuery2, 
+  size: 10,
+  scroll_token: null,
+  pretty: true
 }
-console.log(finalList)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
----- 
-const finalList = []
-for (let i = 0; i < companyNames.length; i++) {
-  const queryString = {"name":`${companyNames[i]}`}
-  
-  // Pass the parameters object to the Company Enrichment API
-  PDLJSClient.company.enrichment(queryString).then((response) => {
-    // Print the API response
+PDLJSClient.person.search.elastic(params).then((data) => {
+    var record
     
-    finalList.push(response)
-    console.log(response)
-  }).catch((error) => {
+    for (let response in data.data) {
+    
+        record = data.data[response]
+      
+        // Print selected fields
+        console.log(
+            record["linkedin_url"],
+            record["full_name"],
+            record["job_title"],
+            record["job_company_name"],
+            )
+    }
+    console.log(`successfully grabbed ${data.data.length} records from pdl`);
+    console.log(`${data["total"]} total pdl records exist matching this query`)
+}).catch((error) => {
+    // console.log("NOTE. The eager beaver was not so eager. See error and try again.")
     console.log(error);
-  });
-}
-console.log(finalList)
-
-
-
-*/
+});
