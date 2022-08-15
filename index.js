@@ -74,15 +74,32 @@ const test = async () => {
 }
 // test();
 
-const esQuery2 = {
+
+
+
+const seniority_levels = [
+ "cxo",
+ "director",
+ "manager",
+ "partner",
+ "vp",
+ "owner"]
+ 
+ const seniority_criteria = {terms: {experience_title_levels: seniority_levels}}
+ 
+ const esQuery2 = {
   query: {
     bool: {
       must:[
         {term: {job_company_id: "buzzfeed"}}, 
-        // {term: {location: "united states"}},
-        {term: {job_title_role: "engineering"}}, 
-        // {exists: {field: "linkedin_url"}}
-      ]
+        {term: {location_country: "united states"}},
+        {term: {job_title: "software engineer"}}, 
+        // {term: {job_title_level: "senior"}}, 
+        {exists: {field: "linkedin_url"}}
+      ], 
+      must_not: [
+        // {terms: {job_title: "staff"}}
+      ],
     }
   }
 }
@@ -90,7 +107,7 @@ const esQuery2 = {
 
 var params = {
   searchQuery: esQuery2, 
-  size: 10,
+  size: 20,
   scroll_token: null,
   pretty: true
 }
@@ -98,18 +115,35 @@ var params = {
 
 PDLJSClient.person.search.elastic(params).then((data) => {
     var record
-    
+    const list = []
+    // console.log(data.data.job_start_date)
     for (let response in data.data) {
-    
-        record = data.data[response]
       
+        record = data.data[response]
+        // console.log(record)
+        list.push(record)
+        list.sort((a, b) => {
+          return new Date (a.job_last_updated) - new Date (b.job_last_updated)
+        })
+        // console.log(list.record["job_start_date"])
         // Print selected fields
-        console.log(
-            record["job_title"],
-            record["linkedin_url"],
-            record["full_name"],
-            record["job_company_name"],
-            )
+        // console.log(
+        //   record["job_title"],
+        //   record["linkedin_url"],
+        //   record["full_name"],
+        //   record["job_company_name"],
+        //   record["job_last_updated"]
+        //   )
+        }
+        
+    // console.log(list[2].job_start_date)
+    for (let person of list){
+      console.log(
+        person["job_title"],
+        person["full_name"],
+        person["linkedin_url"],
+        person["job_last_updated"]
+      )
     }
     console.log(`successfully grabbed ${data.data.length} records from pdl`);
     console.log(`${data["total"]} total pdl records exist matching this query`)
