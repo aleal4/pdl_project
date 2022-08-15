@@ -5,6 +5,7 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import PDLJS from 'peopledatalabs';
 import 'dotenv/config'
+import * as csvwriter from 'csv-writer';
 
 
 const total = JSON.parse(
@@ -145,9 +146,43 @@ PDLJSClient.person.search.elastic(params).then((data) => {
         person["job_last_updated"]
       )
     }
+    let csvHeaderFields = [
+      {id: "work_email", title: "work_email"},
+      {id: "full_name", title: "full_name"}, 
+      {id: "linkedin_url", title: "linkedin_url"},
+      {id: "job_title", title: "job_title"},
+      {id: "job_company_name", title: "job_company_name"}
+    ]
+    let csvFilename = "BuzzFeed Top 10 Prospects"
+    saveProfilesToCSV(list, csvFilename, csvHeaderFields)
     console.log(`successfully grabbed ${data.data.length} records from pdl`);
     console.log(`${data["total"]} total pdl records exist matching this query`)
 }).catch((error) => {
     // console.log("NOTE. The eager beaver was not so eager. See error and try again.")
     console.log(error);
 });
+
+function saveProfilesToCSV(profiles, filename, fields) {
+   // Create CSV file
+    const createCsvWriter = csvwriter.createObjectCsvWriter;
+    const csvWriter = createCsvWriter({
+        path: filename,
+        header: fields
+    });
+    let data = [];
+    // Iterate through records array
+    for (let i = 0; i < profiles.length; i++) {
+        let record = profiles[i];
+        data[i] = {};
+        // Store requested fields
+        for (let field in fields) {
+            data[i][fields[field].id] = record[fields[field].id];    
+        }
+     }
+
+    // Write data to CSV file
+    csvWriter
+        .writeRecords(data)
+        .then(()=> console.log('The CSV file was written successfully'));
+
+}
